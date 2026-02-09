@@ -1,34 +1,34 @@
-// package com.example.quiz_system.service;
+ package com.example.quiz_system.service;
 
-// import com.example.quiz_system.entity.User;
-// import com.example.quiz_system.repository.UserRepository;
-// import org.springframework.security.core.authority.SimpleGrantedAuthority;
-// import org.springframework.security.core.userdetails.*;
-// import org.springframework.stereotype.Service;
+ import com.example.quiz_system.entity.User;
+ import com.example.quiz_system.repository.UserRepository;
+ import org.springframework.security.core.authority.SimpleGrantedAuthority;
+ import org.springframework.security.core.userdetails.*;
+ import org.springframework.stereotype.Service;
 
-// import java.util.List;
+ import java.util.List;
 
-// @Service
-// public class CustomUserDetailsService implements UserDetailsService {
+ @Service
+ public class CustomUserDetailsService implements UserDetailsService {
 
-//     private final UserRepository userRepository;
+     private final UserRepository userRepository;
 
-//     public CustomUserDetailsService(UserRepository userRepository) {
-//         this.userRepository = userRepository;
-//     }
+     public CustomUserDetailsService(UserRepository userRepository) {
+         this.userRepository = userRepository;
+     }
 
-//     @Override
-//     public UserDetails loadUserByUsername(String email)
-//             throws UsernameNotFoundException {
+     @Override
+     public UserDetails loadUserByUsername(String username)
+             throws UsernameNotFoundException {
 
-//         User user = userRepository.findByEmail(email)
-//                 .orElseThrow(() ->
-//                         new UsernameNotFoundException("User not found"));
+         User user = userRepository.findByEmail(username)
+                 .orElseThrow(() ->
+                         new UsernameNotFoundException("User not found"));
 
-//         return new org.springframework.security.core.userdetails.User(
-//                 user.getEmail(),
-//                 user.getPassword(),
-//                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-//         );
-//     }
-// }
+         return new org.springframework.security.core.userdetails.User(
+                 user.getUserName(),
+                 user.getPassword(),
+                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+         );
+     }
+ }
